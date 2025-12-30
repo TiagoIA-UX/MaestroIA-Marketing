@@ -1,5 +1,5 @@
-teste_openai.py
 venv/
 .venv/
 __pycache__/
 .env
+teste_openai.py

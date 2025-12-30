@@ -1,17 +1,18 @@
-from crewai import Crew
-from tasks.pesquisa_task import pesquisa_task
-from core.database import create_tables
+# main.py
 
-def run_maestro():
-    create_tables()
+from core.ai_client import AIClient
 
-    crew = Crew(
-        agents=[pesquisa_task.agent],
-        tasks=[pesquisa_task],
-        verbose=True
+
+def main():
+    ai = AIClient()
+
+    resposta = ai.ask(
+        prompt="Responda apenas: MaestroIA operacional",
+        system="Você é um assistente técnico conciso."
     )
 
-    return crew.kickoff()
+    print(resposta)
+
 
 if __name__ == "__main__":
-    print(run_maestro())
+    main()
