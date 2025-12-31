@@ -1,10 +1,10 @@
-# MaestroIA Marketing
+# MaestroIA
 
 Plataforma SaaS para orquestração de agentes de IA em marketing digital.
 
 ## Visão Geral
 
-O **MaestroIA Marketing** é uma plataforma inovadora que permite a profissionais de marketing criar e gerenciar equipes autônomas de agentes de IA. Inspirado na reportagem do Fantástico sobre a "profissão do futuro" (orquestrar agentes de IA), o sistema executa campanhas de marketing digital completas de ponta a ponta, desde pesquisa de mercado até otimização de resultados.
+O **MaestroIA** é uma plataforma inovadora que permite a profissionais de marketing criar e gerenciar equipes autônomas de agentes de IA. Inspirado na reportagem do Fantástico sobre a "profissão do futuro" (orquestrar agentes de IA), o sistema executa campanhas de marketing digital completas de ponta a ponta, desde pesquisa de mercado até otimização de resultados.
 
 O usuário define o objetivo da campanha (ex.: "Lançar produto X para público feminino 25-40 anos no Instagram e Google Ads"), e os agentes trabalham em colaboração: pesquisam tendências, criam estratégias, produzem conteúdos, publicam e otimizam — tudo com comunicação interna e supervisão humana opcional.
 
