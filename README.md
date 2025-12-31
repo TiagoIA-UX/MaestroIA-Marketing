@@ -14,7 +14,8 @@ O usuário define o objetivo da campanha (ex.: "Lançar produto X para público 
 - **Orquestração Inteligente**: Fluxo coordenado com LangGraph, garantindo consistência e eficiência.
 - **Integrações**: APIs reais para OpenAI (GPT + DALL-E), Google Trends, Meta (Instagram/Facebook), Google Ads, Twitter/X, LinkedIn, TikTok, YouTube, Pinterest, Snapchat (com simulações quando chaves não configuradas).
 - **Autenticação**: Cadastro e login com JWT e banco SQLite.
-- **Interfaces Múltiplas**: Terminal, API REST (FastAPI) e UI Web (Streamlit).
+- **Interface Web (Streamlit)**: Abas organizadas, barra de progresso em tempo real, configurações de APIs, aprovação de publicações, download de resultados.
+- **Criação de Conteúdo Inteligente**: Templates estruturados por rede social (Instagram, Twitter, LinkedIn, etc.) para conteúdos otimizados.
 - **Memória Vetorial**: FAISS para aprendizado contínuo de campanhas.
 - **Geração de Imagens**: DALL-E para criar imagens personalizadas nos conteúdos.
 - **Governança**: Aprovações humanas e regras de segurança.
