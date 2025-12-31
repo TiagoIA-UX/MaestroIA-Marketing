@@ -1,26 +1,103 @@
 # MaestroIA
 
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/TiagoIA-UX/MaestroIA/releases/tag/v1.0.0)
+[![Python](https://img.shields.io/badge/python-3.14+-green.svg)](https://www.python.org/)
+[![License](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
+
 Plataforma SaaS para orquestração de agentes de IA em marketing digital.
 
-## Visão Geral
+## 🎯 Sobre o Projeto
 
 O **MaestroIA** é uma plataforma inovadora que permite a profissionais de marketing criar e gerenciar equipes autônomas de agentes de IA. Inspirado na reportagem do Fantástico sobre a "profissão do futuro" (orquestrar agentes de IA), o sistema executa campanhas de marketing digital completas de ponta a ponta, desde pesquisa de mercado até otimização de resultados.
 
 O usuário define o objetivo da campanha (ex.: "Lançar produto X para público feminino 25-40 anos no Instagram e Google Ads"), e os agentes trabalham em colaboração: pesquisam tendências, criam estratégias, produzem conteúdos, publicam e otimizam — tudo com comunicação interna e supervisão humana opcional.
 
-## Funcionalidades Principais
+## ✨ Funcionalidades (v1.0.0)
 
-- **Agentes Autônomos**: 6 agentes especializados (Pesquisador, Estrategista, Criador de Conteúdo, Publicador, Otimizador, Maestro).
-- **Orquestração Inteligente**: Fluxo coordenado com LangGraph, garantindo consistência e eficiência.
-- **Integrações**: APIs reais para OpenAI (GPT + DALL-E), Google Trends, Meta (Instagram/Facebook), Google Ads, Twitter/X, LinkedIn, TikTok, YouTube, Pinterest, Snapchat (com simulações quando chaves não configuradas).
-- **Autenticação**: Cadastro e login com JWT e banco SQLite.
-- **Interface Web (Streamlit)**: Abas organizadas, barra de progresso em tempo real, configurações de APIs, aprovação de publicações, download de resultados em PDF e JSON.
-- **Criação de Conteúdo Inteligente**: Templates estruturados por rede social (Instagram, Twitter, LinkedIn, etc.) para conteúdos otimizados.
-- **Memória Vetorial**: FAISS para aprendizado contínuo de campanhas.
-- **Geração de Imagens**: DALL-E para criar imagens personalizadas nos conteúdos.
-- **Governança**: Aprovações humanas e regras de segurança.
+### 🤖 Agentes Autônomos
+- **Pesquisador**: Análise de mercado e tendências (Google Trends)
+- **Estrategista**: Desenvolvimento de estratégias de marketing
+- **Criador de Conteúdo**: Produção de conteúdos otimizados por rede social
+- **Publicador**: Publicação automatizada em múltiplas plataformas
+- **Otimizador**: Análise e otimização de performance
+- **Maestro**: Coordenação e supervisão geral
 
-## Arquitetura
+### 🔗 Integrações
+- **OpenAI**: GPT-4o-mini para texto, DALL-E para imagens
+- **Google Trends**: Pesquisa de tendências reais
+- **Twitter/X**: Publicação automatizada
+- **Meta (Instagram/Facebook)**: Estrutura preparada
+- **Google Ads, LinkedIn, TikTok**: Estruturas implementadas
+- **YouTube, Pinterest, Snapchat**: Suporte planejado
+
+### 🔐 Segurança
+- **Autenticação obrigatória** com cadastro seguro
+- **Validação de emails** e senhas fortes
+- **Criptografia SHA-256** para senhas
+- **Sistema de permissões** e controle de acesso
+
+### 🎨 Interface
+- **Design elegante** com gradientes e cards modernos
+- **Interface intuitiva** para usuários não-técnicos
+- **Progress bars** e feedback visual em tempo real
+- **Relatórios em PDF** para download
+- **Configurações de APIs** organizadas por plataforma
+
+## 🚀 Instalação e Execução
+
+### Pré-requisitos
+- Python 3.14 ou superior
+- Git
+- Conta OpenAI (para funcionalidades de IA)
+
+### Instalação Rápida
+
+```bash
+# Clone o repositório
+git clone https://github.com/TiagoIA-UX/MaestroIA.git
+cd MaestroIA
+
+# Crie ambiente virtual
+python -m venv .venv
+.venv\Scripts\activate  # Windows
+# ou
+source .venv/bin/activate  # Linux/Mac
+
+# Instale dependências
+pip install -r requirements.txt
+```
+
+### Configuração
+
+1. **Chaves de API**: Configure suas chaves no arquivo `.env`:
+```bash
+# Copie o arquivo de exemplo
+cp .env.example .env
+
+# Edite com suas chaves
+OPENAI_API_KEY=sk-your-openai-key
+TWITTER_API_KEY=your-twitter-key
+# ... outras chaves conforme necessário
+```
+
+2. **Execute a aplicação**:
+```bash
+# Interface Web (recomendado)
+python -m streamlit run ui_app.py
+
+# Ou API REST
+python api_server.py
+```
+
+3. **Acesse**: `http://localhost:8503`
+
+### Primeiro Uso
+1. **Cadastre-se** na aba "📝 Cadastrar-se"
+2. **Configure APIs** na aba "⚙️ Configurações" (opcional)
+3. **Crie campanhas** na aba "📝 Criar Campanha"
+4. **Acompanhe resultados** na aba "📊 Resultados"
+
+## 📊 Arquitetura
 
 ```
 maestroia/
@@ -39,15 +116,22 @@ maestroia/
 ├─ run.py           # Script de execução
 ├─ api_server.py   # Servidor da API
 ├─ ui_app.py        # App Streamlit
+├─ users.json       # Armazenamento de usuários
 ├─ requirements.txt
 ├─ .env.example
 └─ README.md
 ```
 
-## Tecnologias
+## 🛠️ Tecnologias
 
-- **Python 3.14+**: Compatível com versões recentes.
-- **LangGraph**: Orquestração de agentes.
+- **Python 3.14+**: Compatível com versões recentes
+- **LangGraph**: Orquestração de agentes
+- **Streamlit**: Interface web moderna
+- **FastAPI**: API REST (estrutura preparada)
+- **OpenAI API**: GPT-4o-mini + DALL-E
+- **FAISS**: Memória vetorial
+- **ReportLab**: Geração de PDFs
+- **SQLAlchemy**: ORM para banco de dados (planejado)
 - **OpenAI GPT-4o-mini**: Modelos de linguagem.
 - **APIs de Redes Sociais**: Twitter (tweepy), Google Ads, Meta, etc.
 
