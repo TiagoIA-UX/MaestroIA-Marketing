@@ -21,12 +21,16 @@ def agente_pesquisador(state: MaestroState) -> MaestroState:
     objetivo = state.get("objetivo", "Marketing digital")
     publico = state.get("publico_alvo", "Público geral")
 
-    # Buscar tendências no Google Trends
-    pytrends = TrendReq()
-    keywords = [objetivo, publico]
-    pytrends.build_payload(keywords, cat=0, timeframe='today 12-m', geo='', gprop='')
-    trends_data = pytrends.interest_over_time()
-    trends_summary = trends_data.head().to_string() if not trends_data.empty else "Dados de tendências não disponíveis."
+    # Buscar tendências no Google Trends com tratamento de erro
+    try:
+        pytrends = TrendReq()
+        keywords = [objetivo, publico]
+        pytrends.build_payload(keywords, cat=0, timeframe='today 12-m', geo='', gprop='')
+        trends_data = pytrends.interest_over_time()
+        trends_summary = trends_data.head().to_string() if not trends_data.empty else "Dados de tendências não disponíveis."
+    except Exception as e:
+        # Fallback para dados simulados se houver erro (rate limit, etc.)
+        trends_summary = f"Dados simulados do Google Trends (erro na API: {str(e)}): Interesse crescente em {objetivo} nos últimos 12 meses, pico em {publico}."
 
     # Simulação de dados SEMrush (API paga - integrar chave real futuramente)
     semrush_data = f"Palavras-chave relacionadas: {objetivo} (volume estimado: 10k), {publico} (volume estimado: 5k). Concorrentes: Empresa A, Empresa B."
