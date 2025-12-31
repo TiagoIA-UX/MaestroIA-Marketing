@@ -1,7 +1,95 @@
 import streamlit as st
 import requests
 import json
+from io import BytesIO
+from reportlab.lib.pagesizes import letter
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image as RLImage
+from reportlab.lib.units import inch
 from maestroia.graphs.marketing_graph import build_marketing_graph
+
+def gerar_pdf_campanha(result, objetivo, publico, canais, orcamento):
+    """Gera um PDF com os resultados da campanha"""
+    buffer = BytesIO()
+    doc = SimpleDocTemplate(buffer, pagesize=letter)
+    styles = getSampleStyleSheet()
+    
+    # Estilos customizados
+    title_style = ParagraphStyle(
+        'CustomTitle',
+        parent=styles['Heading1'],
+        fontSize=18,
+        spaceAfter=30,
+    )
+    heading_style = ParagraphStyle(
+        'CustomHeading',
+        parent=styles['Heading2'],
+        fontSize=14,
+        spaceAfter=12,
+    )
+    normal_style = styles['Normal']
+    
+    story = []
+    
+    # Título
+    story.append(Paragraph("Relatório da Campanha MaestroIA", title_style))
+    story.append(Spacer(1, 12))
+    
+    # Informações da campanha
+    story.append(Paragraph("Informações da Campanha", heading_style))
+    story.append(Paragraph(f"<b>Objetivo:</b> {objetivo}", normal_style))
+    story.append(Paragraph(f"<b>Público-Alvo:</b> {publico}", normal_style))
+    story.append(Paragraph(f"<b>Canais:</b> {', '.join(canais)}", normal_style))
+    story.append(Paragraph(f"<b>Orçamento:</b> R$ {orcamento:.2f}", normal_style))
+    story.append(Spacer(1, 20))
+    
+    # Resultados
+    if "pesquisa" in result:
+        story.append(Paragraph("Análise de Mercado", heading_style))
+        story.append(Paragraph(result["pesquisa"], normal_style))
+        story.append(Spacer(1, 12))
+    
+    if "conteudos" in result:
+        story.append(Paragraph("Conteúdos Gerados", heading_style))
+        for i, conteudo in enumerate(result["conteudos"], 1):
+            story.append(Paragraph(f"Conteúdo {i}:", styles['Heading3']))
+            # Limpar markdown e HTML
+            conteudo_limpo = conteudo.replace('*', '').replace('#', '').replace('**', '')
+            story.append(Paragraph(conteudo_limpo, normal_style))
+            story.append(Spacer(1, 8))
+        story.append(Spacer(1, 12))
+    
+    if "publicacoes" in result:
+        story.append(Paragraph("Publicações", heading_style))
+        for canal, status in result["publicacoes"].items():
+            story.append(Paragraph(f"<b>{canal}:</b> {status}", normal_style))
+        story.append(Spacer(1, 12))
+    
+    # Imagens (se houver URLs válidas)
+    if "imagens" in result:
+        story.append(Paragraph("Imagens Geradas", heading_style))
+        for img_url in result["imagens"]:
+            if img_url.startswith("http"):
+                try:
+                    # Tentar baixar e adicionar imagem
+                    response = requests.get(img_url)
+                    if response.status_code == 200:
+                        img_buffer = BytesIO(response.content)
+                        img = RLImage(img_buffer, width=4*inch, height=3*inch)
+                        story.append(img)
+                        story.append(Spacer(1, 12))
+                except:
+                    story.append(Paragraph(f"Imagem: {img_url}", normal_style))
+            else:
+                story.append(Paragraph(f"Descrição da imagem: {img_url}", normal_style))
+    
+    # Rodapé
+    story.append(Spacer(1, 30))
+    story.append(Paragraph("Relatório gerado pelo MaestroIA", styles['Italic']))
+    
+    doc.build(story)
+    buffer.seek(0)
+    return buffer
 
 st.title("MaestroIA - Orquestração de Agentes de Marketing")
 
@@ -130,7 +218,7 @@ else:
                         st.write(img_url)
 
             # Botões de ação
-            col1, col2, col3 = st.columns(3)
+            col1, col2, col3, col4 = st.columns(4)
             with col1:
                 if st.button("✅ Aprovar e Publicar", type="primary"):
                     st.success("Publicação aprovada! (Integração real pendente)")
@@ -140,13 +228,23 @@ else:
                     st.info("Recarregue a página e ajuste os parâmetros.")
 
             with col3:
-                # Download
+                # Download JSON
                 result_json = json.dumps(result, indent=2, ensure_ascii=False)
                 st.download_button(
-                    label="📥 Baixar Resultados",
+                    label="📄 Baixar JSON",
                     data=result_json,
                     file_name="campanha_maestroia.json",
                     mime="application/json"
+                )
+
+            with col4:
+                # Download PDF
+                pdf_buffer = gerar_pdf_campanha(result, objetivo, publico, canais, orcamento)
+                st.download_button(
+                    label="📕 Baixar PDF",
+                    data=pdf_buffer,
+                    file_name="relatorio_campanha_maestroia.pdf",
+                    mime="application/pdf"
                 )
         else:
             st.info("Execute uma campanha primeiro para ver os resultados.")

@@ -42,3 +42,6 @@ google-ads>=23.0.0  # Google Ads
 linkedin-api>=2.0.0  # LinkedIn (opcional, ou usar requests)
 pinterest-api>=1.0.0  # Pinterest (se disponível)
 # TikTok, Snapchat, YouTube usam requests direto
+
+# Geração de PDFs
+reportlab>=4.0.0
