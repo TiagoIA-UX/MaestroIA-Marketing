@@ -15,6 +15,9 @@ langgraph-checkpoint>=2.0.0
 # OpenAI SDK
 openai>=1.50.0
 
+# Mercado Pago SDK (opcional)
+mercadopago>=5.0.0
+
 # Utilidades
 requests>=2.30.0
 tenacity>=8.0.0,<9.0.0  # Compatível com LangChain atual

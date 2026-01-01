@@ -1,6 +1,5 @@
 import requests
 import tweepy
-from langchain_openai import ChatOpenAI
 from maestroia.config.settings import (
     OPENAI_API_KEY,
     DEFAULT_LLM_MODEL,
@@ -19,18 +18,13 @@ from maestroia.config.settings import (
     SNAPCHAT_ACCESS_TOKEN,
 )
 from maestroia.core.state import MaestroState
+from maestroia.services.openai_service import chat as openai_chat
 
 # Imports condicionais para evitar erros se bibliotecas não estiverem instaladas
 try:
     import google.ads
 except ImportError:
     google = None
-
-llm = ChatOpenAI(
-    api_key=OPENAI_API_KEY,
-    model=DEFAULT_LLM_MODEL,
-    temperature=DEFAULT_TEMPERATURE,
-)
 
 def publicar_instagram_facebook(conteudo: str, canal: str) -> str:
     """Publicar no Instagram/Facebook via Meta Graph API"""

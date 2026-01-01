@@ -4,12 +4,17 @@ import json
 import os
 import hashlib
 import re
+import warnings
 from io import BytesIO
 from datetime import datetime, timedelta
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image as RLImage
 from reportlab.lib.units import inch
+
+# Suprimir aviso de compatibilidade Pydantic v1 com Python 3.14+
+warnings.filterwarnings("ignore", message="Core Pydantic V1 functionality isn't compatible with Python 3.14 or greater")
+
 from maestroia.graphs.marketing_graph import build_marketing_graph
 
 # Mercado Pago

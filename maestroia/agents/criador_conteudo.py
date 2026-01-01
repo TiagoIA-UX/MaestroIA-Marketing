@@ -1,18 +1,5 @@
-from langchain_openai import ChatOpenAI
-from openai import OpenAI
-from maestroia.config.settings import (
-    OPENAI_API_KEY,
-    DEFAULT_LLM_MODEL,
-    DEFAULT_TEMPERATURE,
-)
 from maestroia.core.state import MaestroState
-
-llm = ChatOpenAI(
-    api_key=OPENAI_API_KEY,
-    model=DEFAULT_LLM_MODEL,
-    temperature=DEFAULT_TEMPERATURE,
-)
-client = OpenAI(api_key=OPENAI_API_KEY)
+from maestroia.services.openai_service import chat as openai_chat, generate_image
 
 def agente_criador_conteudo(state: MaestroState) -> MaestroState:
     """
@@ -112,27 +99,18 @@ def agente_criador_conteudo(state: MaestroState) -> MaestroState:
         Preencha o template com conteúdo relevante e persuasivo.
         """
 
-        resposta = llm.invoke(prompt)
-        conteudo = f"**{canal}:**\n{resposta.content.strip()}"
+        resposta_text = openai_chat(prompt)
+        conteudo = f"**{canal}:**\n{resposta_text.strip()}"
         conteudos.append(conteudo)
 
-    # Gerar imagem com DALL-E baseada na sugestão do primeiro conteúdo
-
-    # Gerar imagem com DALL-E baseada na sugestão
     image_prompt = "Uma imagem inspiradora para marketing digital sustentável"
-    try:
-        image_response = client.images.generate(
-            model="dall-e-3",
-            prompt=image_prompt,
-            size="1024x1024",
-            quality="standard",
-            n=1,
-        )
-        image_url = image_response.data[0].url
-    except Exception as e:
-        image_url = f"Erro ao gerar imagem: {str(e)}"
+    image_urls = generate_image(image_prompt, n=1)
+    if image_urls:
+        imagens = image_urls
+    else:
+        imagens = ["fallback_image"]
 
     return {
-        "conteudos": [resposta.content],
-        "imagens": [image_url]
+        "conteudos": conteudos,
+        "imagens": imagens
     }

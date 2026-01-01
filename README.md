@@ -138,6 +138,28 @@ MERCADOPAGO_ACCESS_TOKEN=...
 
 Sem chaves, o sistema funciona em modo simulado.
 
+### Segurança das chaves
+Não comite o arquivo `.env` com chaves reais. O repositório já ignora `.env` via `.gitignore` — recomenda-se usar variáveis de ambiente no CI ou serviços secretos do provedor de hospedagem. Para testes locais, copie `.env.example` para `.env` e preencha `OPENAI_API_KEY`.
+
+### Integrações reais
+
+Implementações iniciais adicionadas:
+
+- **OpenAI**: wrapper em `maestroia/services/openai_service.py` (chat + imagens). Requer `OPENAI_API_KEY` no `.env`.
+- **Google Trends**: encapsulado em `maestroia/services/trends_service.py` (usa `pytrends`, com fallback se indisponível).
+- **Mercado Pago**: wrapper em `maestroia/services/mercadopago_service.py` (criar preferência / verificar pagamento). Requer `MERCADOPAGO_ACCESS_TOKEN` se quiser usar de fato.
+
+Instale dependências:
+```powershell
+pip install -r requirements.txt
+```
+
+Para inserir a chave localmente com segurança use:
+```powershell
+python scripts/insert_env_key.py
+```
+
+
 
 ## 🎬 Exemplo Visual e Saídas
 

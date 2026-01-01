@@ -48,12 +48,20 @@ REQUIRE_HUMAN_APPROVAL = os.getenv("REQUIRE_HUMAN_APPROVAL", "true").lower() == 
 LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
 
 # =========================
+# EMBEDDINGS
+# =========================
+DEFAULT_EMBEDDING_MODEL = os.getenv("DEFAULT_EMBEDDING_MODEL", "text-embedding-3-small")
+DEFAULT_EMBEDDING_DIM = int(os.getenv("DEFAULT_EMBEDDING_DIM", "1536"))
+
+# =========================
 # APIs DE REDES SOCIAIS
 # =========================
 
 # Meta (Facebook/Instagram)
 META_ACCESS_TOKEN = os.getenv("META_ACCESS_TOKEN")
 META_APP_ID = os.getenv("META_APP_ID")
+META_APP_SECRET = os.getenv("META_APP_SECRET")
+META_REDIRECT_URI = os.getenv("META_REDIRECT_URI", "http://localhost:8000/auth/meta/callback")
 
 # Google Ads
 GOOGLE_ADS_CUSTOMER_ID = os.getenv("GOOGLE_ADS_CUSTOMER_ID")

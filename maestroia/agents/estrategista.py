@@ -1,17 +1,5 @@
-from langchain_openai import ChatOpenAI
-from maestroia.config.settings import (
-    OPENAI_API_KEY,
-    DEFAULT_LLM_MODEL,
-    DEFAULT_TEMPERATURE,
-)
 from maestroia.core.state import MaestroState
-
-
-llm = ChatOpenAI(
-    api_key=OPENAI_API_KEY,
-    model=DEFAULT_LLM_MODEL,
-    temperature=DEFAULT_TEMPERATURE,
-)
+from maestroia.services.openai_service import chat as openai_chat
 
 
 def agente_estrategista(state: MaestroState) -> MaestroState:
@@ -49,8 +37,8 @@ def agente_estrategista(state: MaestroState) -> MaestroState:
     Seja claro, direto e profissional.
     """
 
-    resposta = llm.invoke(prompt)
+    resposta_text = openai_chat(prompt)
 
     return {
-        "estrategia": resposta.content
+        "estrategia": resposta_text
     }

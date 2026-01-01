@@ -25,6 +25,9 @@ from maestroia.core.auth import create_access_token, get_current_user
 import json
 import mercadopago
 from maestroia.config.settings import MERCADOPAGO_ACCESS_TOKEN
+from maestroia.services.meta_service import get_meta_oauth_url, exchange_code_for_token
+from maestroia.services.token_store import save_token
+from maestroia.config.settings import META_REDIRECT_URI
 @app.post("/webhook/mercadopago")
 async def webhook_mercadopago(request: Request, db: Session = Depends(get_db)):
     """
@@ -70,6 +73,32 @@ async def webhook_mercadopago(request: Request, db: Session = Depends(get_db)):
         return {"status": f"Pagamento recebido, status: {status}"}
     except Exception as e:
         return {"error": str(e)}
+
+
+@app.get("/auth/meta/start")
+def meta_auth_start(user_email: str):
+    """Iniciar fluxo OAuth Meta; retorna URL de autorização para o client seguir."""
+    redirect = META_REDIRECT_URI
+    url = get_meta_oauth_url(redirect)
+    # Passar user_email via state poderia ser melhor; aqui retornamos URL e espera-se que o client inclua state param
+    return {"auth_url": url, "note": "Inclua parâmetro 'state' com user_email no client para vincular token."}
+
+
+@app.get("/auth/meta/callback")
+def meta_auth_callback(code: str, state: str = None, request: Request = None):
+    """Callback para Meta OAuth; troca código por token e persiste usando `token_store`.
+
+    Expects 'state' to contain the user_email to link token to. Returns stored token info.
+    """
+    redirect = META_REDIRECT_URI
+    result = exchange_code_for_token(code, redirect)
+    if result.get("status") != "ok":
+        raise HTTPException(status_code=400, detail=result.get("message", "Erro ao trocar código"))
+
+    user_key = state or "anonymous"
+    # Persistir o token para o usuário
+    save_token("meta", user_key, result.get("data"))
+    return {"status": "ok", "user": user_key, "data": result.get("data")}
 
 app = FastAPI(title="MaestroIA API")
 
