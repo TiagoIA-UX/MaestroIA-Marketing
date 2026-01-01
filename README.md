@@ -1,6 +1,6 @@
 
 <div align="center">
-   <img src="https://img.shields.io/badge/version-1.0.0-blue.svg" alt="Versão" />
+   <img src="https://img.shields.io/badge/version-1.1.0-blue.svg" alt="Versão" />
    <img src="https://img.shields.io/badge/python-3.14+-green.svg" alt="Python" />
    <img src="https://img.shields.io/badge/license-MIT-yellow.svg" alt="Licença" />
 </div>
@@ -23,15 +23,16 @@ O **MaestroIA** é uma plataforma visual e interativa para orquestração de age
 - Relatórios em PDF com visual profissional
 - Integração Mercado Pago para planos pagos
 - Experiência de uso inspirada em eBooks e dashboards premium
+- **Novidade v1.1.0:** Integrações reais com APIs (OpenAI, Google Trends, Mercado Pago, Meta OAuth) com fallbacks para desenvolvimento offline
 
 
 ## ✨ Funcionalidades Principais
 
 ### 🤖 Agentes Inteligentes
-- **Pesquisador**: Analisa tendências e oportunidades
-- **Estrategista**: Cria estratégias de marketing
-- **Criador de Conteúdo**: Gera posts e anúncios otimizados
-- **Publicador**: Simula publicações em múltiplas redes
+- **Pesquisador**: Analisa tendências e oportunidades (integra Google Trends)
+- **Estrategista**: Cria estratégias de marketing (usa OpenAI GPT-4o-mini)
+- **Criador de Conteúdo**: Gera posts e anúncios otimizados (com IA generativa)
+- **Publicador**: Simula publicações em múltiplas redes (estrutura para Meta, Google Ads)
 - **Otimizador**: Sugere melhorias com base em dados
 - **Maestro**: Orquestra e supervisiona todo o fluxo
 
@@ -41,13 +42,15 @@ O **MaestroIA** é uma plataforma visual e interativa para orquestração de age
 - Interface responsiva, intuitiva e acessível
 
 ### 🔗 Integrações
-- **OpenAI** (GPT-4o-mini, DALL-E)
-- **Google Trends**
-- **Mercado Pago** (pagamentos de planos)
-- **Redes Sociais** (simulação e estrutura para integrações reais)
+- **OpenAI** (GPT-4o-mini, DALL-E) - Respostas reais ou fallbacks simulados
+- **Google Trends** - Dados reais de tendências ou simulados
+- **Mercado Pago** (pagamentos de planos) - Integração real
+- **Meta OAuth** (Facebook/Instagram) - Estrutura para autenticação
+- **Google Ads** - Simulação com estrutura para integração
 
 ### 🔐 Segurança
 - Cadastro seguro, validação de email e senha forte
+- Fallbacks automáticos para APIs indisponíveis (modo offline seguro)
 - Dados criptografados e controle de acesso
 
 
@@ -159,6 +162,20 @@ Para inserir a chave localmente com segurança use:
 python scripts/insert_env_key.py
 ```
 
+### Testes
+Execute os testes unitários:
+```bash
+python -m unittest discover maestroia/tests
+```
+
+Ou use os scripts admin:
+```powershell
+# PowerShell
+.\scripts\admin_run_tasks.ps1
+
+# Python
+python scripts/admin_run_tasks.py
+```
 
 
 ## 🎬 Exemplo Visual e Saídas
