@@ -1857,6 +1857,7 @@ def app_page():
       const dashboardView = document.getElementById('dashboard-view');
       if (loginView) loginView.style.display = 'none';
       if (dashboardView) dashboardView.style.display = 'flex';
+      renderCampaignHistory();
     }
     
     // Wait for DOM to be ready
@@ -1980,6 +1981,123 @@ def app_page():
         alert('Seu navegador não suporta cópia automática. Selecione e copie manualmente.');
       }
     }
+
+    // Campaign persistence + rendering
+    function getCampaignStorageKey() {
+      const userKey = (currentUser && currentUser.email) ? currentUser.email.toLowerCase() : 'guest';
+      return 'maestro_campaigns_v2_' + userKey;
+    }
+
+    function loadCampaignsFromStorage() {
+      try {
+        const raw = localStorage.getItem(getCampaignStorageKey());
+        const parsed = raw ? JSON.parse(raw) : [];
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function saveCampaignsToStorage(campaigns) {
+      try {
+        localStorage.setItem(getCampaignStorageKey(), JSON.stringify(campaigns || []));
+      } catch {
+        // no-op
+      }
+    }
+
+    function getObjetivoLabel(objetivo) {
+      return {
+        awareness: 'Reconhecimento de marca',
+        engagement: 'Engajamento',
+        leads: 'Geração de leads',
+        sales: 'Vendas',
+        traffic: 'Tráfego qualificado'
+      }[objetivo] || 'Resultado de marketing';
+    }
+
+    function buildCampaignOutput(payload) {
+      const objetivoLabel = getObjetivoLabel(payload.objetivo);
+      const canaisTexto = (payload.canais && payload.canais.length)
+        ? payload.canais.join(', ')
+        : 'Instagram e Google Ads';
+
+      const budgetLine = payload.orcamento
+        ? `Faixa de investimento sugerida: R$ ${Number(payload.orcamento).toLocaleString('pt-BR')} (ajuste por canal e fase da campanha).`
+        : 'Faixa de investimento: comece com orçamento controlado e escale com base no desempenho inicial.';
+
+      return `✅ Posicionamento da campanha
+${payload.produto.split('—')[0].trim() || 'Sua marca'}: proposta com foco em valor percebido, clareza e ação.
+
+✅ Mensagem principal (copy base)
+Sua comunicação precisa converter atenção em intenção. Esta campanha foi estruturada para reduzir ruído, destacar diferenciais e direcionar a próxima ação do público.
+
+✅ Direcionamento estratégico
+- Objetivo prioritário: ${objetivoLabel}
+- Público-alvo: ${payload.publico}
+- Canais recomendados: ${canaisTexto}
+- ${budgetLine}
+
+✅ CTA recomendado
+"Quero receber o plano completo" ou "Quero iniciar agora".
+
+✅ Plano de execução (primeiros 20 minutos)
+1) Publicar a peça principal no canal de maior aderência
+2) Responder interações com roteiro de objeções e proposta de valor
+3) Registrar métricas iniciais (alcance, cliques e conversões)
+4) Rodar uma variação de headline mantendo a mesma oferta
+`;
+    }
+
+    function renderCampaignHistory() {
+      const campaigns = loadCampaignsFromStorage();
+      const campaignsEmpty = document.getElementById('campaigns-empty');
+      const campaignsData = document.getElementById('campaigns-data');
+
+      if (!campaignsData || !campaignsEmpty) return;
+
+      if (!campaigns.length) {
+        campaignsData.style.display = 'none';
+        campaignsData.innerHTML = '';
+        campaignsEmpty.style.display = 'block';
+        return;
+      }
+
+      campaignsEmpty.style.display = 'none';
+      campaignsData.style.display = 'block';
+
+      const sorted = [...campaigns].sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+      campaignsData.innerHTML = sorted.map((campaign) => {
+        const isReady = campaign.status === 'ready';
+        const badgeBg = isReady ? 'var(--success)' : 'var(--primary)';
+        const badgeLabel = isReady ? 'Pronta' : 'Processando';
+        const createdLabel = campaign.createdAt
+          ? new Date(campaign.createdAt).toLocaleString('pt-BR')
+          : new Date().toLocaleString('pt-BR');
+
+        return '<div style="background:var(--bg3);padding:16px;border-radius:12px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">'
+          + '<div><strong>' + campaign.nome + '</strong><br/>'
+          + '<span style="color:var(--text2);font-size:.85rem">' + getObjetivoLabel(campaign.objetivo) + ' • ' + createdLabel + '</span></div>'
+          + '<div style="display:flex;align-items:center;gap:10px">'
+          + (campaign.output ? '<button class="action-btn secondary" style="padding:8px 12px;font-size:.8rem" onclick="showCampaignResult(' + campaign.id + ')">Ver entrega</button>' : '')
+          + '<span style="background:' + badgeBg + ';color:#fff;padding:4px 12px;border-radius:6px;font-size:.8rem">' + badgeLabel + '</span>'
+          + '</div></div>';
+      }).join('');
+    }
+
+    function showCampaignResult(campaignId) {
+      const campaigns = loadCampaignsFromStorage();
+      const campaign = campaigns.find((item) => item.id === campaignId);
+      if (!campaign || !campaign.output) return;
+
+      const resultWrap = document.getElementById('campaign-result');
+      const resultContent = document.getElementById('campaign-result-content');
+      if (resultWrap && resultContent) {
+        resultContent.textContent = campaign.output;
+        resultWrap.style.display = 'block';
+        resultWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
     
     // Create Campaign
     function createCampaign(e) {
@@ -1989,9 +2107,13 @@ def app_page():
       const publico = document.getElementById('campaign-publico').value;
       const produto = document.getElementById('campaign-produto').value;
       const orcamento = document.getElementById('campaign-orcamento').value;
+      const canaisSelect = document.getElementById('campaign-canais');
+      const canais = canaisSelect
+        ? Array.from(canaisSelect.selectedOptions).map((option) => option.textContent.trim())
+        : [];
       
       if (!nome || !objetivo || !publico || !produto) {
-        alert('Por favor, preencha os campos obrigatórios.');
+        alert('Preencha os campos obrigatórios para gerar uma campanha completa.');
         return;
       }
       
@@ -2000,52 +2122,44 @@ def app_page():
       const originalText = btn.innerHTML;
       btn.innerHTML = '<div class="loading-spinner" style="width:20px;height:20px;border-width:2px"></div> Processando...';
       btn.disabled = true;
+
+      const campaignId = Date.now();
+      const campaigns = loadCampaignsFromStorage();
+      campaigns.push({
+        id: campaignId,
+        nome,
+        objetivo,
+        publico,
+        produto,
+        orcamento,
+        canais,
+        status: 'processing',
+        output: '',
+        createdAt: campaignId
+      });
+      saveCampaignsToStorage(campaigns);
+      renderCampaignHistory();
       
       // Simulate API call
       setTimeout(() => {
-        // Add to campaigns list
-        const campaignsEmpty = document.getElementById('campaigns-empty');
-        const campaignsData = document.getElementById('campaigns-data');
-        if (campaignsEmpty) campaignsEmpty.style.display = 'none';
-        if (campaignsData) {
-          campaignsData.style.display = 'block';
-          const newCampaign = document.createElement('div');
-          newCampaign.style = 'background:var(--bg3);padding:16px;border-radius:12px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center';
-          newCampaign.innerHTML = '<div><strong>' + nome + '</strong><br/><span style="color:var(--text2);font-size:.85rem">' + objetivo + ' • ' + new Date().toLocaleDateString('pt-BR') + '</span></div><span style="background:var(--primary);color:#fff;padding:4px 12px;border-radius:6px;font-size:.8rem">Processando</span>';
-          campaignsData.appendChild(newCampaign);
-        }
+        const output = buildCampaignOutput({
+          objetivo,
+          publico,
+          produto,
+          orcamento,
+          canais
+        });
 
-        const objetivoLabel = {
-          awareness: 'reconhecimento',
-          engagement: 'engajamento',
-          leads: 'leads',
-          sales: 'vendas',
-          traffic: 'tráfego'
-        }[objetivo] || 'resultado';
-
-        const budgetLine = orcamento ? `Orçamento sugerido: R$ ${Number(orcamento).toLocaleString('pt-BR')} (ajuste conforme canal).` : 'Orçamento: defina um valor simples para começar e otimizar depois.';
-
-        const output = `✅ Headline (direta)
-${produto.split('—')[0].trim() || 'MaestroIA'}: pare de fazer marketing no achismo e ganhe previsibilidade
-
-✅ Copy curta (post/anúncio)
-Se o seu marketing está virando retrabalho, você não precisa de mais “conteúdo”. Você precisa de um sistema.
-
-O MaestroIA organiza sua mensagem, transforma seu briefing em campanha executável e te dá próximos passos claros — em minutos.
-
-👉 Objetivo agora: ${objetivoLabel}
-👉 Público: ${publico}
-${budgetLine}
-
-✅ CTA
-Comente “MAESTRO” ou clique para gerar sua primeira campanha.
-
-✅ Checklist de execução (10 minutos)
-1) Escolha 1 canal principal (Instagram ou Google Ads)
-2) Publique a copy e use o CTA
-3) Responda os primeiros comentários/mensagens
-4) Volte aqui e rode uma variação mudando só a promessa
-`;
+        const updated = loadCampaignsFromStorage().map((item) => {
+          if (item.id !== campaignId) return item;
+          return {
+            ...item,
+            status: 'ready',
+            output
+          };
+        });
+        saveCampaignsToStorage(updated);
+        renderCampaignHistory();
 
         const resultWrap = document.getElementById('campaign-result');
         const resultContent = document.getElementById('campaign-result-content');
@@ -2059,7 +2173,7 @@ Comente “MAESTRO” ou clique para gerar sua primeira campanha.
         document.getElementById('campaign-form').reset();
         btn.innerHTML = originalText;
         btn.disabled = false;
-      }, 2000);
+      }, 1200);
     }
     
     // Schedule Post
