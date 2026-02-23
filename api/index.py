@@ -1446,7 +1446,13 @@ def app_page():
           </div>
           
           <div id="campaigns-list">
-            <h3 style="font-size:1.1rem;font-weight:600;margin-bottom:16px">Histórico de Campanhas</h3>
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px">
+              <h3 style="font-size:1.1rem;font-weight:600">Histórico de Campanhas</h3>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <button class="action-btn secondary" onclick="exportCampaignHistory()" style="padding:8px 12px;font-size:.82rem">Exportar JSON</button>
+                <button class="action-btn secondary" onclick="clearCampaignHistory()" style="padding:8px 12px;font-size:.82rem">Limpar histórico</button>
+              </div>
+            </div>
             <div id="campaigns-empty" class="empty-state" style="text-align:center;padding:40px 20px;background:var(--bg3);border-radius:12px">
               <p style="color:var(--text2)">Nenhuma campanha executada ainda</p>
             </div>
@@ -2079,10 +2085,96 @@ Sua comunicação precisa converter atenção em intenção. Esta campanha foi e
           + '<div><strong>' + campaign.nome + '</strong><br/>'
           + '<span style="color:var(--text2);font-size:.85rem">' + getObjetivoLabel(campaign.objetivo) + ' • ' + createdLabel + '</span></div>'
           + '<div style="display:flex;align-items:center;gap:10px">'
+          + '<button class="action-btn secondary" style="padding:8px 12px;font-size:.8rem" onclick="editCampaign(' + campaign.id + ')">Editar</button>'
           + (campaign.output ? '<button class="action-btn secondary" style="padding:8px 12px;font-size:.8rem" onclick="showCampaignResult(' + campaign.id + ')">Ver entrega</button>' : '')
+          + '<button class="action-btn secondary" style="padding:8px 12px;font-size:.8rem" onclick="deleteCampaign(' + campaign.id + ')">Excluir</button>'
           + '<span style="background:' + badgeBg + ';color:#fff;padding:4px 12px;border-radius:6px;font-size:.8rem">' + badgeLabel + '</span>'
           + '</div></div>';
       }).join('');
+    }
+
+    function editCampaign(campaignId) {
+      const campaigns = loadCampaignsFromStorage();
+      const campaign = campaigns.find((item) => item.id === campaignId);
+      if (!campaign) return;
+
+      const set = (id, value) => {
+        const el = document.getElementById(id);
+        if (el) el.value = value ?? '';
+      };
+
+      set('campaign-name', campaign.nome);
+      set('campaign-objetivo', campaign.objetivo);
+      set('campaign-publico', campaign.publico);
+      set('campaign-produto', campaign.produto);
+      set('campaign-orcamento', campaign.orcamento);
+
+      const canaisSelect = document.getElementById('campaign-canais');
+      if (canaisSelect && Array.isArray(campaign.canais)) {
+        Array.from(canaisSelect.options).forEach((option) => {
+          option.selected = campaign.canais.includes(option.textContent.trim());
+        });
+      }
+
+      navigateTo('campanhas');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      alert('Campanha carregada para edição. Ajuste os campos e execute novamente para gerar a nova versão.');
+    }
+
+    function deleteCampaign(campaignId) {
+      const campaigns = loadCampaignsFromStorage();
+      const exists = campaigns.some((item) => item.id === campaignId);
+      if (!exists) return;
+
+      const confirmed = confirm('Deseja excluir esta campanha do histórico?');
+      if (!confirmed) return;
+
+      const updated = campaigns.filter((item) => item.id !== campaignId);
+      saveCampaignsToStorage(updated);
+      renderCampaignHistory();
+    }
+
+    function exportCampaignHistory() {
+      const campaigns = loadCampaignsFromStorage();
+      if (!campaigns.length) {
+        alert('Não há campanhas para exportar.');
+        return;
+      }
+
+      const payload = {
+        exportedAt: new Date().toISOString(),
+        total: campaigns.length,
+        campaigns
+      };
+
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'maestroia_campanhas_' + new Date().toISOString().slice(0, 10) + '.json';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }
+
+    function clearCampaignHistory() {
+      const campaigns = loadCampaignsFromStorage();
+      if (!campaigns.length) {
+        alert('O histórico já está vazio.');
+        return;
+      }
+
+      const confirmed = confirm('Isso removerá todas as campanhas salvas deste usuário. Deseja continuar?');
+      if (!confirmed) return;
+
+      saveCampaignsToStorage([]);
+      renderCampaignHistory();
+
+      const resultWrap = document.getElementById('campaign-result');
+      const resultContent = document.getElementById('campaign-result-content');
+      if (resultWrap) resultWrap.style.display = 'none';
+      if (resultContent) resultContent.textContent = '';
     }
 
     function showCampaignResult(campaignId) {
