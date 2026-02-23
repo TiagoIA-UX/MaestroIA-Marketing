@@ -73,8 +73,8 @@ python -m venv .venv
 # ou
 source .venv/bin/activate  # Linux/Mac
 
-# Instale as dependências
-pip install -r requirements.txt
+# Instale as dependências completas (desenvolvimento local)
+pip install -r requirements.local.txt
 ```
 
 ### Configuração
@@ -111,7 +111,8 @@ maestroia/
 ├─ ui/              # Componentes Streamlit
 ├─ ui_app.py        # App principal (Streamlit)
 ├─ users.json       # Usuários
-├─ requirements.txt
+├─ requirements.txt        # mínimo para deploy Vercel
+├─ requirements.local.txt  # completo para desenvolvimento local
 ├─ .env.example
 └─ README.md
 ```
@@ -154,7 +155,7 @@ Implementações iniciais adicionadas:
 
 Instale dependências:
 ```powershell
-pip install -r requirements.txt
+pip install -r requirements.local.txt
 ```
 
 Para inserir a chave localmente com segurança use:
