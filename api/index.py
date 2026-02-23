@@ -209,8 +209,8 @@ def root():
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>MaestroIA — Orquestrador de Agentes de IA para Marketing</title>
-  <meta name="description" content="Automatize campanhas de marketing com inteligência artificial. Agentes especializados trabalhando 24/7 para escalar seu negócio."/>
+  <title>MaestroIA — O sistema que tira seu marketing do caos</title>
+  <meta name="description" content="Saia do achismo e do retrabalho: organize estratégia, gere campanhas e produza copy em minutos com o Sistema Maestro™. Primeira vitória em menos de 5 minutos."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
@@ -398,6 +398,23 @@ def root():
     .footer-links a:hover{color:var(--text)}
     .footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:30px;border-top:1px solid var(--border);color:var(--text3);font-size:.85rem}
     .footer-bottom a{color:var(--text2);text-decoration:none}
+
+    /* Before vs After + Manual Comparison + ROI */
+    .split-section{background:var(--bg2)}
+    .split-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:40px}
+    .split-card{background:var(--glass);border:1px solid var(--border);border-radius:20px;padding:28px;position:relative;overflow:hidden}
+    .split-card h3{margin-bottom:10px}
+    .split-card ul{list-style:none;margin-top:14px}
+    .split-card li{display:flex;gap:10px;align-items:flex-start;color:var(--text2);margin:10px 0}
+    .split-card li svg{width:20px;height:20px;flex-shrink:0;margin-top:2px}
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;border:1px solid var(--border);background:var(--glass);color:var(--text2);font-size:.85rem}
+    .pill strong{color:var(--text)}
+    .roi-box{margin-top:28px;background:var(--glass);border:1px solid var(--border);border-radius:18px;padding:20px}
+    .roi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px}
+    .roi-grid label{display:block;font-size:.85rem;color:var(--text2);margin-bottom:6px}
+    .roi-grid input{width:100%;padding:12px 12px;border-radius:12px;border:1px solid var(--border);background:var(--bg3);color:var(--text)}
+    .roi-result{margin-top:14px;color:var(--text2)}
+    .roi-result strong{color:var(--text)}
     
     /* Responsive */
     @media(max-width:1024px){
@@ -409,6 +426,8 @@ def root():
       .steps::before{display:none}
       .pricing-grid{grid-template-columns:1fr}
       .pricing-card.featured{transform:none}
+      .split-grid{grid-template-columns:1fr}
+      .roi-grid{grid-template-columns:1fr 1fr}
     }
     @media(max-width:768px){
       section{padding:60px 0}
@@ -419,6 +438,7 @@ def root():
       .footer-grid{grid-template-columns:1fr 1fr}
       .cta-box{padding:40px 24px}
       .floating-card{display:none}
+      .roi-grid{grid-template-columns:1fr}
     }
   </style>
 </head>
@@ -453,18 +473,19 @@ def root():
       <div class="hero-grid">
         <div class="hero-content">
           <div class="hero-badge">
-            <span>NOVO</span>
-            Orquestração de IA para Marketing
+            <span>SISTEMA</span>
+            Método Maestro™ (6 agentes em sincronia)
           </div>
-          <h1>Automatize seu <span class="gradient-text">Marketing Digital</span> com Agentes de IA</h1>
-          <p>6 agentes especializados trabalhando em conjunto para pesquisar, criar, otimizar e publicar suas campanhas. Resultados 10x mais rápidos com qualidade profissional.</p>
+          <h1>Seu marketing virou <span class="gradient-text">caos</span> — e isso está te custando caro.</h1>
+          <p>O MaestroIA transforma ideias soltas em campanhas prontas para executar: estratégia clara, copy persuasiva e plano de ação em minutos. <strong>Primeira vitória em menos de 5 minutos</strong> (sem cartão).</p>
           <div class="hero-buttons">
             <a href="/app" class="btn btn-primary">
-              Começar Gratuitamente
+              Gerar minha 1ª campanha agora
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </a>
-            <a href="#how" class="btn btn-secondary">Ver Demonstração</a>
+            <a href="#before-after" class="btn btn-secondary">Ver Antes vs Depois</a>
           </div>
+          <div style="margin-top:14px" class="text-sm text-muted">Sem cartão. Sem setup técnico. Você começa com um modelo guiado.</div>
           <div class="hero-stats">
             <div class="stat">
               <div class="stat-value">10x</div>
@@ -509,6 +530,41 @@ def root():
     </div>
   </section>
 
+  <!-- Before vs After -->
+  <section id="before-after" class="split-section">
+    <div class="container">
+      <div class="features-header">
+        <div class="pill">Problema emocional: <strong>sobrecarga</strong> + <strong>ansiedade de performance</strong> + <strong>medo de ficar para trás</strong></div>
+        <h2 style="margin-top:14px">Antes vs Depois: do <span class="gradient-text">achismo</span> ao <span class="gradient-text">controle</span></h2>
+        <p>Você não compra “IA”. Você compra clareza, ritmo e previsibilidade.</p>
+      </div>
+
+      <div class="split-grid">
+        <div class="split-card">
+          <h3>Antes (manual)</h3>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 8l8 8M16 8l-8 8"/></svg><span>Você começa empolgado e termina em retrabalho.</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 8l8 8M16 8l-8 8"/></svg><span>Briefing vira “texto bonito” sem estratégia de conversão.</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 8l8 8M16 8l-8 8"/></svg><span>Planilhas, docs e abas abertas drenam foco e tempo.</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 8l8 8M16 8l-8 8"/></svg><span>Você sente que está sempre “correndo atrás”.</span></li>
+          </ul>
+        </div>
+        <div class="split-card" style="border-color:var(--primary)">
+          <h3>Depois (Sistema Maestro™)</h3>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span>Uma linha mestra: posicionamento → oferta → canais → copy → execução.</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span>Decisão mais rápida: você sabe o que publicar e por quê.</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span>Consistência de marca sem esforço mental constante.</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span>Você recupera controle — e isso muda sua performance.</span></li>
+          </ul>
+          <div style="margin-top:18px">
+            <a class="btn btn-primary" href="/app" style="width:100%;justify-content:center">Quero minha primeira vitória</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Logos -->
   <section class="logos">
     <div class="container">
@@ -527,8 +583,8 @@ def root():
   <section id="features">
     <div class="container">
       <div class="features-header">
-        <h2>6 Agentes de IA <span class="gradient-text">Trabalhando por Você</span></h2>
-        <p>Cada agente é especialista em uma etapa do funil de marketing, colaborando em tempo real para entregar resultados excepcionais.</p>
+        <h2>Features técnicas? Você sente <span class="gradient-text">benefícios psicológicos</span>.</h2>
+        <p>O Método Maestro™ traduz dados em clareza e execução — sem você ficar preso no “por onde eu começo?”.</p>
       </div>
       <div class="features-grid">
         <div class="feature-card">
@@ -536,7 +592,7 @@ def root():
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
           </div>
           <h3>Pesquisador</h3>
-          <p>Analisa tendências, concorrência e comportamento do público para insights estratégicos.</p>
+          <p>Tira você do achismo e reduz ansiedade: você toma decisões com direção, não com esperança.</p>
           <div class="feature-image">
             <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80" alt="Analytics Dashboard"/>
           </div>
@@ -546,7 +602,7 @@ def root():
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
           </div>
           <h3>Estrategista</h3>
-          <p>Define posicionamento, tom de voz e estratégias personalizadas para cada campanha.</p>
+          <p>Transforma “ideias soltas” em um plano com lógica de conversão: mensagem central, promessa e próximos passos.</p>
           <div class="feature-image">
             <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80" alt="Strategy Planning"/>
           </div>
@@ -556,7 +612,7 @@ def root():
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>
           </div>
           <h3>Criador de Conteúdo</h3>
-          <p>Produz textos, headlines e copies persuasivos otimizados para conversão.</p>
+          <p>Cria copy com estrutura (dor → prova → oferta → CTA) para você parar de postar no escuro.</p>
           <div class="feature-image">
             <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=600&q=80" alt="Content Creation"/>
           </div>
@@ -566,7 +622,7 @@ def root():
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
           </div>
           <h3>Otimizador</h3>
-          <p>Aplica SEO, ajusta campanhas em tempo real e maximiza performance.</p>
+          <p>Enxerga gargalos e sugere ajustes. Você volta a sentir progresso real (e não só trabalho).</p>
           <div class="feature-image">
             <img src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=600&q=80" alt="Performance Optimization"/>
           </div>
@@ -576,9 +632,9 @@ def root():
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
           </div>
           <h3>Publicador</h3>
-          <p>Distribui conteúdo automaticamente nas plataformas certas no momento ideal.</p>
+          <p>Organiza consistência. Menos fricção mental, mais ritmo — o marketing finalmente “anda”.</p>
           <div class="feature-image">
-            <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&q=80" alt="Social Media Publishing"/>
+            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80" alt="Social Media Publishing"/>
           </div>
         </div>
         <div class="feature-card">
@@ -586,7 +642,7 @@ def root():
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </div>
           <h3>Maestro</h3>
-          <p>Orquestra todos os agentes, garantindo sincronia e qualidade final.</p>
+          <p>Garante que tudo encaixe: pesquisa → estratégia → conteúdo → execução. Você sente controle.</p>
           <div class="feature-image">
             <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&q=80" alt="Team Orchestration"/>
           </div>
@@ -599,29 +655,29 @@ def root():
   <section id="how" class="how-it-works">
     <div class="container">
       <div class="features-header">
-        <h2>Como o <span class="gradient-text">MaestroIA</span> Funciona</h2>
-        <p>Em 4 passos simples você coloca seus agentes de IA para trabalhar</p>
+        <h2>O Método <span class="gradient-text">Maestro™</span> em 4 passos</h2>
+        <p>Uma sequência que reduz fricção e entrega uma campanha executável (não só “texto”).</p>
       </div>
       <div class="steps">
         <div class="step">
           <div class="step-number">1</div>
-          <h3>Defina seu Objetivo</h3>
-          <p>Informe seu produto, público-alvo e metas de campanha</p>
+          <h3>Clareza (2 minutos)</h3>
+          <p>Você responde 3 perguntas. O resto vira sistema.</p>
         </div>
         <div class="step">
           <div class="step-number">2</div>
-          <h3>IA Pesquisa</h3>
-          <p>Agentes analisam mercado, tendências e concorrência</p>
+          <h3>Direção (sem achismo)</h3>
+          <p>Mercado, promessa e objeções mapeadas automaticamente.</p>
         </div>
         <div class="step">
           <div class="step-number">3</div>
-          <h3>Conteúdo é Criado</h3>
-          <p>Textos, estratégias e criativos são gerados automaticamente</p>
+          <h3>Copy & Oferta</h3>
+          <p>Headline, CTA e roteiro de campanha prontos para publicar.</p>
         </div>
         <div class="step">
           <div class="step-number">4</div>
-          <h3>Publicação Automática</h3>
-          <p>Campanhas são publicadas e otimizadas em tempo real</p>
+          <h3>Execução</h3>
+          <p>Checklist de canais e próximos passos para ganhar tração.</p>
         </div>
       </div>
     </div>
@@ -661,29 +717,84 @@ def root():
     </div>
   </section>
 
+  <!-- ROI -->
+  <section class="roi">
+    <div class="container">
+      <div class="features-header">
+        <div class="pill">Ancoragem de valor</div>
+        <h2 style="margin-top:14px">Quanto isso pode voltar em <span class="gradient-text">ROI</span>?</h2>
+        <p>Uma estimativa simples para você enxergar custo vs. retorno (ajuste os números para o seu cenário).</p>
+      </div>
+
+      <div class="roi-box">
+        <div class="roi-grid">
+          <div>
+            <div class="roi-field">
+              <label>Ticket médio (R$)</label>
+              <input id="roiTicket" type="number" min="0" step="1" value="300"/>
+            </div>
+            <div class="roi-field">
+              <label>Margem (%)</label>
+              <input id="roiMargin" type="number" min="0" max="100" step="1" value="40"/>
+            </div>
+            <div class="roi-field">
+              <label>Conversões por mês (hoje)</label>
+              <input id="roiConversions" type="number" min="0" step="1" value="50"/>
+            </div>
+            <div class="roi-field">
+              <label>Ganho esperado (%) com melhor execução</label>
+              <input id="roiLift" type="number" min="0" step="1" value="15"/>
+            </div>
+          </div>
+
+          <div>
+            <div class="roi-field">
+              <label>Horas economizadas por mês</label>
+              <input id="roiHours" type="number" min="0" step="1" value="20"/>
+            </div>
+            <div class="roi-field">
+              <label>Custo/hora do time (R$)</label>
+              <input id="roiHourCost" type="number" min="0" step="1" value="80"/>
+            </div>
+
+            <div class="roi-result">
+              <div class="roi-kpi">
+                <div class="roi-kpi-label">Retorno mensal estimado</div>
+                <div id="roiTotal" class="roi-kpi-value">R$ 0</div>
+              </div>
+              <div class="roi-note">Inclui: lucro incremental (conversões) + custo economizado (tempo). É uma estimativa — não uma promessa.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Pricing -->
   <section id="pricing" class="pricing">
     <div class="container">
       <div class="pricing-header">
-        <h2>Planos para <span class="gradient-text">Cada Momento</span></h2>
-        <p>Comece gratuitamente e escale conforme seu negócio cresce</p>
+        <h2>Escolha o plano pelo seu <span class="gradient-text">momento</span></h2>
+        <p>Sem cartão no Starter. Upgrade quando você quiser.</p>
       </div>
       <div class="pricing-grid">
         <div class="pricing-card">
-          <div class="pricing-name">Starter</div>
-          <div class="pricing-desc">Para quem está começando</div>
-          <div class="pricing-price">Grátis</div>
+          <div class="pricing-name">Enterprise</div>
+          <div class="pricing-desc">Para operações com metas agressivas e governança</div>
+          <div class="pricing-price">Custom</div>
           <ul class="pricing-features">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>50 execuções/mês</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>3 agentes ativos</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>1 integração</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Suporte por email</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Tudo do Pro</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Agentes customizados</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>SLA garantido</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Onboarding dedicado</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>White-label</li>
           </ul>
-          <a href="/app" class="btn btn-secondary">Começar Grátis</a>
+          <a href="/app" class="btn btn-secondary">Falar com Vendas</a>
         </div>
+
         <div class="pricing-card featured">
           <div class="pricing-name">Pro</div>
-          <div class="pricing-desc">Para equipes em crescimento</div>
+          <div class="pricing-desc">Para ritmo, previsibilidade e execução</div>
           <div class="pricing-price">R$297<span>/mês</span></div>
           <ul class="pricing-features">
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Execuções ilimitadas</li>
@@ -694,18 +805,18 @@ def root():
           </ul>
           <a href="/app" class="btn btn-primary">Assinar Pro</a>
         </div>
+
         <div class="pricing-card">
-          <div class="pricing-name">Enterprise</div>
-          <div class="pricing-desc">Para grandes operações</div>
-          <div class="pricing-price">Custom</div>
+          <div class="pricing-name">Starter</div>
+          <div class="pricing-desc">Para provar valor e destravar a 1ª campanha</div>
+          <div class="pricing-price">Grátis</div>
           <ul class="pricing-features">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Tudo do Pro</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Agentes customizados</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>SLA garantido</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Onboarding dedicado</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>White-label</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>50 execuções/mês</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>3 agentes ativos</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>1 integração</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Suporte por email</li>
           </ul>
-          <a href="/app" class="btn btn-secondary">Falar com Vendas</a>
+          <a href="/app" class="btn btn-secondary">Começar Grátis</a>
         </div>
       </div>
     </div>
@@ -769,14 +880,14 @@ def root():
             Como o MaestroIA é diferente de outras ferramentas de IA?
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           </div>
-          <div class="faq-answer">MaestroIA não é apenas uma ferramenta de geração de texto. É um sistema completo de orquestração com 6 agentes especializados que trabalham em conjunto, cada um focado em uma etapa específica do funil de marketing, garantindo resultados muito superiores.</div>
+          <div class="faq-answer">MaestroIA não é “só um gerador de texto”. É o <strong>Método Maestro™</strong>: 6 agentes orquestrados para pesquisa → estratégia → oferta/copy → execução. Você sai com um pacote pronto para publicar (e com checklist), não com um documento solto.</div>
         </div>
         <div class="faq-item">
           <div class="faq-question">
             Preciso de conhecimento técnico para usar?
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           </div>
-          <div class="faq-answer">Não! A plataforma foi desenhada para ser intuitiva. Basta informar seu objetivo e deixar os agentes trabalharem. Mas se você é técnico, temos API completa para integrações avançadas.</div>
+          <div class="faq-answer">Não. Você pode começar no <strong>modo guiado</strong>: preenche o essencial e executa. Se você for técnico, dá para integrar via API e automatizar fluxos mais avançados.</div>
         </div>
         <div class="faq-item">
           <div class="faq-question">
@@ -790,7 +901,7 @@ def root():
             Quais plataformas são suportadas?
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           </div>
-          <div class="faq-answer">Atualmente integramos com Google Ads, Meta (Facebook/Instagram), LinkedIn, e estamos constantemente adicionando novas plataformas como TikTok e Twitter/X.</div>
+          <div class="faq-answer">Você pode operar com Google Ads e Meta (Facebook/Instagram) como foco inicial, além de outros canais conforme seu setup. O importante é: você começa por 1 canal, publica, mede e roda variações.</div>
         </div>
       </div>
     </div>
@@ -801,10 +912,10 @@ def root():
     <div class="container">
       <div class="cta-box">
         <div class="cta-content">
-          <h2>Pronto para Revolucionar seu Marketing?</h2>
-          <p>Junte-se a centenas de empresas que já estão usando IA para escalar seus resultados</p>
+          <h2>Pronto para sua <span class="gradient-text">primeira vitória</span>?</h2>
+          <p>Entre, use o modo guiado e gere uma campanha executável em minutos. Sem cartão no Starter.</p>
           <div class="cta-buttons">
-            <a href="/app" class="btn btn-primary">Começar Gratuitamente</a>
+            <a href="/app" class="btn btn-primary">Começar agora (Quickstart)</a>
             <a href="#pricing" class="btn btn-secondary">Ver Planos</a>
           </div>
         </div>
@@ -875,6 +986,43 @@ def root():
         document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'})
       })
     });
+
+    // ROI calculator (simple estimate)
+    (function(){
+      const ids = ['roiTicket','roiMargin','roiConversions','roiLift','roiHours','roiHourCost'];
+      const els = Object.fromEntries(ids.map(id=>[id, document.getElementById(id)]));
+      const out = document.getElementById('roiTotal');
+      if(!out || Object.values(els).some(v=>!v)) return;
+
+      const num = (v)=>{
+        const n = Number(String(v ?? '').replace(',', '.'));
+        return Number.isFinite(n) ? n : 0;
+      }
+      const money = (v)=>{
+        try{ return v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'}); }
+        catch{ return 'R$ ' + (Math.round(v*100)/100).toString(); }
+      }
+
+      const calc = ()=>{
+        const ticket = num(els.roiTicket.value);
+        const margin = Math.min(100, Math.max(0, num(els.roiMargin.value))) / 100;
+        const conversions = num(els.roiConversions.value);
+        const lift = Math.max(0, num(els.roiLift.value)) / 100;
+        const hours = Math.max(0, num(els.roiHours.value));
+        const hourCost = Math.max(0, num(els.roiHourCost.value));
+
+        const incrementalProfit = conversions * lift * ticket * margin;
+        const savedCost = hours * hourCost;
+        const total = Math.max(0, incrementalProfit + savedCost);
+        out.textContent = money(total);
+      };
+
+      Object.values(els).forEach(el=>{
+        el.addEventListener('input', calc);
+        el.addEventListener('change', calc);
+      });
+      calc();
+    })();
   </script>
 </body>
 </html>
@@ -1176,6 +1324,20 @@ def app_page():
             <h1 class="page-title">Dashboard</h1>
             <p class="page-subtitle">Visão geral da sua conta</p>
           </div>
+
+          <div class="card" style="margin-bottom:24px">
+            <div style="display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap">
+              <div>
+                <div style="font-weight:700;font-size:1rem;margin-bottom:6px">Primeira vitória em &lt; 5 minutos</div>
+                <div style="color:var(--text2);line-height:1.6">Use o modelo guiado para gerar uma campanha executável (headline, copy e próximos passos) sem pensar demais.</div>
+                <div style="margin-top:12px;color:var(--text3);font-size:.85rem">Passos: 1) Ajuste 3 campos 2) Execute 3) Copie e publique</div>
+              </div>
+              <button class="action-btn" onclick="startQuickstart()" style="white-space:nowrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                Começar Quickstart
+              </button>
+            </div>
+          </div>
           
           <div class="quick-actions">
             <button class="action-btn" onclick="navigateTo('campanhas')">
@@ -1195,7 +1357,7 @@ def app_page():
           <div class="empty-state" style="text-align:center;padding:60px 20px;background:var(--glass);border:1px solid var(--border);border-radius:16px;margin-top:24px">
             <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--text3)" stroke-width="1.5" style="margin-bottom:20px"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
             <h3 style="font-size:1.25rem;font-weight:600;margin-bottom:8px;color:var(--text)">Nenhuma campanha ainda</h3>
-            <p style="color:var(--text2);margin-bottom:24px">Crie sua primeira campanha para começar a automatizar seu marketing com IA</p>
+            <p style="color:var(--text2);margin-bottom:24px">Comece pelo Quickstart e saia com um pacote pronto para publicar.</p>
             <button class="action-btn" onclick="navigateTo('campanhas')" style="display:inline-flex">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Criar Primeira Campanha
@@ -1208,6 +1370,18 @@ def app_page():
           <div class="page-header">
             <h1 class="page-title">Campanhas</h1>
             <p class="page-subtitle">Gerencie suas campanhas de marketing</p>
+          </div>
+
+          <div class="card" style="margin-bottom:24px">
+            <div style="display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap">
+              <div>
+                <div style="font-weight:700;margin-bottom:6px">Modo guiado (menos de 5 minutos)</div>
+                <div style="color:var(--text2);line-height:1.6">Pré-preenche um exemplo para você só ajustar o essencial e executar.</div>
+              </div>
+              <button class="action-btn secondary" onclick="prefillCampaignTemplate()" style="white-space:nowrap">
+                Usar modelo guiado
+              </button>
+            </div>
           </div>
           
           <div class="campaign-form" style="background:var(--glass);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:24px">
@@ -1258,6 +1432,17 @@ def app_page():
                 Executar Campanha com IA
               </button>
             </form>
+          </div>
+
+          <div id="campaign-result" style="display:none;background:var(--glass);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:24px">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px">
+              <div>
+                <div style="font-weight:700">Sua primeira vitória</div>
+                <div style="color:var(--text3);font-size:.85rem">Copie, publique e siga o checklist.</div>
+              </div>
+              <button class="action-btn secondary" onclick="copyCampaignResult()" style="padding:10px 16px;font-size:.9rem">Copiar resultado</button>
+            </div>
+            <div id="campaign-result-content" style="white-space:pre-wrap;line-height:1.8;background:var(--bg3);border-radius:12px;padding:18px;color:var(--text)"></div>
           </div>
           
           <div id="campaigns-list">
@@ -1758,6 +1943,43 @@ def app_page():
       const loginForm = document.getElementById('login-form');
       if (loginForm) loginForm.reset();
     }
+
+    // Quickstart helpers
+    function prefillCampaignTemplate() {
+      const set = (id, value) => {
+        const el = document.getElementById(id);
+        if (el) el.value = value;
+      };
+      set('campaign-name', 'Primeira vitória (modelo guiado)');
+      set('campaign-objetivo', 'leads');
+      set('campaign-publico', 'Empreendedores e donos de negócio que querem previsibilidade em marketing');
+      set('campaign-produto', 'MaestroIA — sistema com 6 agentes que transforma briefing em campanha executável (estratégia + copy + próximos passos) em minutos.');
+      const budget = document.getElementById('campaign-orcamento');
+      if (budget && !budget.value) budget.value = '500';
+
+      const name = document.getElementById('campaign-name');
+      name?.focus();
+    }
+
+    function startQuickstart() {
+      navigateTo('campanhas');
+      prefillCampaignTemplate();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function copyCampaignResult() {
+      const el = document.getElementById('campaign-result-content');
+      const text = (el?.textContent || '').trim();
+      if (!text) return;
+      if (navigator.clipboard?.writeText) {
+        navigator.clipboard.writeText(text).then(
+          () => alert('Resultado copiado!'),
+          () => alert('Não foi possível copiar automaticamente. Selecione e copie manualmente.')
+        );
+      } else {
+        alert('Seu navegador não suporta cópia automática. Selecione e copie manualmente.');
+      }
+    }
     
     // Create Campaign
     function createCampaign(e) {
@@ -1792,8 +2014,47 @@ def app_page():
           newCampaign.innerHTML = '<div><strong>' + nome + '</strong><br/><span style="color:var(--text2);font-size:.85rem">' + objetivo + ' • ' + new Date().toLocaleDateString('pt-BR') + '</span></div><span style="background:var(--primary);color:#fff;padding:4px 12px;border-radius:6px;font-size:.8rem">Processando</span>';
           campaignsData.appendChild(newCampaign);
         }
-        
-        alert('Campanha "' + nome + '" criada com sucesso!\\n\\nO sistema de orquestração MaestroIA irá processar sua campanha automaticamente.');
+
+        const objetivoLabel = {
+          awareness: 'reconhecimento',
+          engagement: 'engajamento',
+          leads: 'leads',
+          sales: 'vendas',
+          traffic: 'tráfego'
+        }[objetivo] || 'resultado';
+
+        const budgetLine = orcamento ? `Orçamento sugerido: R$ ${Number(orcamento).toLocaleString('pt-BR')} (ajuste conforme canal).` : 'Orçamento: defina um valor simples para começar e otimizar depois.';
+
+        const output = `✅ Headline (direta)
+${produto.split('—')[0].trim() || 'MaestroIA'}: pare de fazer marketing no achismo e ganhe previsibilidade
+
+✅ Copy curta (post/anúncio)
+Se o seu marketing está virando retrabalho, você não precisa de mais “conteúdo”. Você precisa de um sistema.
+
+O MaestroIA organiza sua mensagem, transforma seu briefing em campanha executável e te dá próximos passos claros — em minutos.
+
+👉 Objetivo agora: ${objetivoLabel}
+👉 Público: ${publico}
+${budgetLine}
+
+✅ CTA
+Comente “MAESTRO” ou clique para gerar sua primeira campanha.
+
+✅ Checklist de execução (10 minutos)
+1) Escolha 1 canal principal (Instagram ou Google Ads)
+2) Publique a copy e use o CTA
+3) Responda os primeiros comentários/mensagens
+4) Volte aqui e rode uma variação mudando só a promessa
+`;
+
+        const resultWrap = document.getElementById('campaign-result');
+        const resultContent = document.getElementById('campaign-result-content');
+        if (resultWrap && resultContent) {
+          resultContent.textContent = output;
+          resultWrap.style.display = 'block';
+          resultWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
         // Clear form
         document.getElementById('campaign-form').reset();
         btn.innerHTML = originalText;

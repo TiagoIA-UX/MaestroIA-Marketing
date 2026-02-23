@@ -23,15 +23,27 @@ IS_PRODUCTION = ENVIRONMENT == "production"
 # OPENAI / LLM
 # =========================
 
+LLM_PROVIDER = os.getenv("LLM_PROVIDER", "openai").strip().lower()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+GROQ_BASE_URL = os.getenv("GROQ_BASE_URL", "https://api.groq.com/openai/v1")
 
-DEFAULT_LLM_MODEL = os.getenv("DEFAULT_LLM_MODEL", "gpt-4o-mini")
+DEFAULT_LLM_MODEL = os.getenv(
+    "DEFAULT_LLM_MODEL",
+    "llama-3.3-70b-versatile" if LLM_PROVIDER == "groq" else "gpt-4o-mini",
+)
 DEFAULT_TEMPERATURE = float(os.getenv("DEFAULT_TEMPERATURE", "0.3"))
 
-if not OPENAI_API_KEY:
+if LLM_PROVIDER == "openai" and not OPENAI_API_KEY:
     raise RuntimeError(
         "❌ OPENAI_API_KEY não encontrada. "
         "Verifique o arquivo .env na raiz do projeto."
+    )
+
+if LLM_PROVIDER == "groq" and not GROQ_API_KEY:
+    raise RuntimeError(
+        "❌ GROQ_API_KEY não encontrada para LLM_PROVIDER=groq. "
+        "Defina GROQ_API_KEY no arquivo .env."
     )
 
 # =========================

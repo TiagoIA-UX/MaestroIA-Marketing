@@ -3,7 +3,14 @@ from maestroia.config import settings
 
 try:
     import openai
-    client = openai.OpenAI(api_key=settings.OPENAI_API_KEY) if settings.OPENAI_API_KEY else None
+    _provider = getattr(settings, "LLM_PROVIDER", "openai")
+    if _provider == "groq":
+        client = openai.OpenAI(
+            api_key=settings.GROQ_API_KEY,
+            base_url=settings.GROQ_BASE_URL,
+        ) if settings.GROQ_API_KEY else None
+    else:
+        client = openai.OpenAI(api_key=settings.OPENAI_API_KEY) if settings.OPENAI_API_KEY else None
 except Exception:
     openai = None
     client = None
@@ -16,9 +23,10 @@ def chat(prompt: str, model: Optional[str] = None, temperature: Optional[float] 
     """
     model = model or settings.DEFAULT_LLM_MODEL
     temperature = temperature if temperature is not None else settings.DEFAULT_TEMPERATURE
+    provider = getattr(settings, "LLM_PROVIDER", "openai")
     try:
         if not client:
-            raise RuntimeError("Cliente OpenAI não inicializado")
+            raise RuntimeError(f"Cliente {provider.upper()} não inicializado")
 
         resp = client.chat.completions.create(
             model=model,
@@ -28,7 +36,8 @@ def chat(prompt: str, model: Optional[str] = None, temperature: Optional[float] 
         return resp.choices[0].message.content
     except Exception as e:
         # Fallback: retornar prompt ecoado com aviso para ambiente de dev
-        return f"[FALLBACK OPENAI] Não foi possível contatar OpenAI: {e}. Prompt: {prompt[:500]}"
+        label = "GROQ" if provider == "groq" else "OPENAI"
+        return f"[FALLBACK {label}] Não foi possível contatar {label}: {e}. Prompt: {prompt[:500]}"
 
 
 def generate_image(prompt: str, n: int = 1, size: str = "1024x1024") -> Optional[list]:

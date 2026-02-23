@@ -1,0 +1,30 @@
+[
+  {
+    "id": "saas_b2b_leads",
+    "objetivo": "Gerar leads qualificados para software de gestão financeira",
+    "publico_alvo": "CFOs e gestores financeiros de PMEs no Brasil",
+    "canais": ["LinkedIn", "Google Ads"],
+    "orcamento": 2500
+  },
+  {
+    "id": "ecommerce_lancamento",
+    "objetivo": "Lançar nova coleção de moda sustentável com foco em vendas",
+    "publico_alvo": "Mulheres de 24 a 38 anos interessadas em moda consciente",
+    "canais": ["Instagram", "Facebook", "TikTok"],
+    "orcamento": 1800
+  },
+  {
+    "id": "servico_local_consultas",
+    "objetivo": "Aumentar agendamentos de clínica odontológica premium",
+    "publico_alvo": "Adultos de 28 a 55 anos em capitais brasileiras",
+    "canais": ["Instagram", "Google Ads"],
+    "orcamento": 1200
+  },
+  {
+    "id": "infoproduto_webinar",
+    "objetivo": "Promover webinar para vender mentoria de marketing",
+    "publico_alvo": "Empreendedores digitais e infoprodutores",
+    "canais": ["YouTube", "LinkedIn", "Email Marketing"],
+    "orcamento": 900
+  }
+]
